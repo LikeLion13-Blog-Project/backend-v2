@@ -37,11 +37,7 @@ public class ArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getArticle(@PathVariable long id){
         ArticleResponse articleResponse=articleService.getArticle(id);
-        if(articleResponse!=null){
-            return ResponseEntity.ok(new ApiResponse(true,200,"게시글 조회 성공", articleResponse));
-        }else{
-            return ResponseEntity.ok(new ApiResponse(false,404,"해당 ID의 게시글을 찾을 수 없습니다."));
-        }
+        return ResponseEntity.ok(new ApiResponse(true,200,"게시글 조회 성공", articleResponse));
 
     }
 
@@ -50,18 +46,16 @@ public class ArticleController {
     public ResponseEntity<ApiResponse> updateArticle(@PathVariable long id,
                                                      @RequestBody UpdateArticleRequest request){
 
-        boolean b=articleService.updateArticle(id,request);
-        if(b) return ResponseEntity.ok(new ApiResponse(true,200,"게시글 수정 성공"));
-        else return ResponseEntity.ok(new ApiResponse(false,404,"해당 ID의 게시글을 찾을 수 없습니다"));
+        articleService.updateArticle(id,request);
+        return ResponseEntity.ok(new ApiResponse(true,200,"게시글 수정 성공"));
 
     }
 
     /*게시글 삭제*/
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteArticle(@PathVariable long id){
-        boolean b=articleService.deleteArticle(id);
-        if (b)return ResponseEntity.ok(new ApiResponse(true,200,"게시글 삭제 성공"));
-        else return ResponseEntity.ok(new ApiResponse(false,404,"해당 ID의 게시글을 찾을 수 없습니다"));
+        articleService.deleteArticle(id);
+        return ResponseEntity.ok(new ApiResponse(true,200,"게시글 삭제 성공"));
 
     }
 }

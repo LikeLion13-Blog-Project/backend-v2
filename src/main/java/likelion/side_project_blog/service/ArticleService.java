@@ -29,7 +29,7 @@ public class ArticleService {
 
     //글 추가
     public void addArticle(AddArticleRequest request){
-
+        //null예외처리..
         articleRepository.save(request.toEntity());
     }
 
@@ -54,24 +54,20 @@ public class ArticleService {
 
 
     //글 삭제
-    public boolean deleteArticle(Long id){
-        Optional<Article> article=articleRepository.findById(id);
-        if(article.isPresent()){
-            articleRepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+    public void deleteArticle(Long id){
+        Article article=articleRepository.findById(id)
+                        .orElseThrow(()->new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
+        articleRepository.deleteById(id);
+
     }
 
     //글 수정
-    public boolean updateArticle(Long id, UpdateArticleRequest request){
-        Optional<Article> article=articleRepository.findById(id);
-        if(article.isPresent()){
-            article.get().update(request.getTitle(),request.getContent());
-            articleRepository.save(article.get());
-            return true;
-        }else return false;
+    public void updateArticle(Long id, UpdateArticleRequest request){
+        Article article=articleRepository.findById(id)
+                        .orElseThrow(()->new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
+        article.update(request.getTitle(),request.getContent());
+        articleRepository.save(article);
+
     }
 
 
