@@ -28,4 +28,8 @@ public class Likes {
     private Article article;
 
 
+    public Likes(User user, Article article) {
+        this.user=user;
+        this.article=article;
+    }
 }
