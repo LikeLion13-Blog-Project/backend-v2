@@ -1,13 +1,17 @@
 package likelion.side_project_blog.controller;
 
 import likelion.side_project_blog.domain.Article;
+import likelion.side_project_blog.domain.User;
 import likelion.side_project_blog.dto.request.AddArticleRequest;
 import likelion.side_project_blog.dto.request.UpdateArticleRequest;
 import likelion.side_project_blog.dto.response.ApiResponse;
 import likelion.side_project_blog.dto.response.ArticleResponse;
+import likelion.side_project_blog.security.UserDetailsImpl;
+import likelion.side_project_blog.security.UserDetailsServiceImpl;
 import likelion.side_project_blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +24,8 @@ public class ArticleController {
 
     /*게시글 전체 조회*/
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles(){
+    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user=userDetails.getUser();
         List<ArticleResponse> articles=articleService.getAllArticles();
         return ResponseEntity.ok(new ApiResponse(true, 200, "게시글 조회 성공", articles));
 
