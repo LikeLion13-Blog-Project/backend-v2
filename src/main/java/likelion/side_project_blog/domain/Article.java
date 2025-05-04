@@ -2,6 +2,8 @@ package likelion.side_project_blog.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,8 +31,11 @@ public class Article {
     @Column(nullable = false)
     private int likenum;
 
-    @Column(nullable = false)
-    private Boolean isLiked;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
 
 
     public void update(String title, String content){
@@ -41,8 +46,7 @@ public class Article {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.likenum = 0;          //
-        this.isLiked = false;      //
+        this.likenum = 0;
     }
 
 

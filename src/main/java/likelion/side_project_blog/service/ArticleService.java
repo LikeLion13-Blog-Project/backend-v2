@@ -2,6 +2,7 @@ package likelion.side_project_blog.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import likelion.side_project_blog.domain.Article;
+import likelion.side_project_blog.domain.User;
 import likelion.side_project_blog.dto.request.AddArticleRequest;
 import likelion.side_project_blog.dto.request.UpdateArticleRequest;
 import likelion.side_project_blog.dto.response.ApiResponse;
@@ -28,9 +29,9 @@ public class ArticleService {
     private final CommentRepository commentRepository;
 
     //글 추가
-    public void addArticle(AddArticleRequest request){
-        //null예외처리..
-        articleRepository.save(request.toEntity());
+    public void addArticle(AddArticleRequest request, User user){
+        //제목/내용 null예외처리..
+        articleRepository.save(request.toEntity(user));
     }
 
 
@@ -54,17 +55,23 @@ public class ArticleService {
 
 
     //글 삭제
-    public void deleteArticle(Long id){
+    public void deleteArticle(Long id, User user){
         Article article=articleRepository.findById(id)
                         .orElseThrow(()->new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
+        if(!article.getUser().getUserId().equals(user.getUserId())){
+            throw new IllegalArgumentException("해당 글에 대한 삭제 권한이 없습니다");
+        }
         articleRepository.deleteById(id);
 
     }
 
     //글 수정
-    public void updateArticle(Long id, UpdateArticleRequest request){
+    public void updateArticle(Long id, UpdateArticleRequest request, User user){
         Article article=articleRepository.findById(id)
                         .orElseThrow(()->new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
+        if(!article.getUser().getUserId().equals(user.getUserId())){
+            throw new IllegalArgumentException("해당 글에 대한 수정 권한이 없습니다");
+        }
         article.update(request.getTitle(),request.getContent());
         articleRepository.save(article);
 

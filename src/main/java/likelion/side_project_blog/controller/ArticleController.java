@@ -24,8 +24,8 @@ public class ArticleController {
 
     /*게시글 전체 조회*/
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        User user=userDetails.getUser();
+    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles(){
+
         List<ArticleResponse> articles=articleService.getAllArticles();
         return ResponseEntity.ok(new ApiResponse(true, 200, "게시글 조회 성공", articles));
 
@@ -33,8 +33,10 @@ public class ArticleController {
 
     /*게시글 추가*/
     @PostMapping
-    public ResponseEntity<ApiResponse> addArticle(@RequestBody AddArticleRequest request){
-        articleService.addArticle(request);
+    public ResponseEntity<ApiResponse> addArticle(@RequestBody AddArticleRequest request,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user=userDetails.getUser(); //현재 로그인한 사용자
+        articleService.addArticle(request,user);
         return ResponseEntity.ok(new ApiResponse(true,200,"게시글 등록 성공"));
     }
 
@@ -49,17 +51,20 @@ public class ArticleController {
     /*게시글 수정*/
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateArticle(@PathVariable long id,
-                                                     @RequestBody UpdateArticleRequest request){
-
-        articleService.updateArticle(id,request);
+                                                     @RequestBody UpdateArticleRequest request,
+                                                     @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user=userDetails.getUser();
+        articleService.updateArticle(id,request,user);
         return ResponseEntity.ok(new ApiResponse(true,200,"게시글 수정 성공"));
 
     }
 
     /*게시글 삭제*/
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteArticle(@PathVariable long id){
-        articleService.deleteArticle(id);
+    public ResponseEntity<ApiResponse> deleteArticle(@PathVariable long id,
+                                                     @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user=userDetails.getUser();
+        articleService.deleteArticle(id,user);
         return ResponseEntity.ok(new ApiResponse(true,200,"게시글 삭제 성공"));
 
     }
