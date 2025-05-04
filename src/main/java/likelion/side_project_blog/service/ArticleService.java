@@ -81,7 +81,7 @@ public class ArticleService {
     //댓글 가져오기
     private List<CommentResponse> getCommentList(Article article){
         return commentRepository.findByArticle(article).stream()
-                .map(comment->new CommentResponse(comment.getContent(),comment.getCreatedAt()))
+                .map(comment->new CommentResponse(comment))
                 .toList();
     }
 

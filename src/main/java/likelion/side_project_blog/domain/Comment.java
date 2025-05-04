@@ -25,6 +25,11 @@ public class Comment {
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Article article;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action= OnDeleteAction.CASCADE)
+    private User user;
+
     @Column(nullable = false)
     private String content;
 
@@ -32,9 +37,10 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @Builder
-    public Comment(Article article,String content){
+    public Comment(Article article,String content, User user){
         this.article=article;
         this.content=content;
+        this.user=user;
     }
 
     @PrePersist
