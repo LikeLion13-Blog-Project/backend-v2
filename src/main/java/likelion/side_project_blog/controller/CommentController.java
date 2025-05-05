@@ -14,7 +14,7 @@ import java.nio.file.Path;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("blog/comment")
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
 

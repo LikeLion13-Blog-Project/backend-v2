@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/blog/articles")
+@RequestMapping("/articles")
 public class ArticleController {
     private final ArticleService articleService;
 
@@ -42,8 +42,10 @@ public class ArticleController {
 
     /*게시글 단일 조회*/
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getArticle(@PathVariable long id){
-        ArticleResponse articleResponse=articleService.getArticle(id);
+    public ResponseEntity<ApiResponse> getArticle(@PathVariable long id,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user=userDetails.getUser();
+        ArticleResponse articleResponse=articleService.getArticle(id,user);
         return ResponseEntity.ok(new ApiResponse(true,200,"게시글 조회 성공", articleResponse));
 
     }

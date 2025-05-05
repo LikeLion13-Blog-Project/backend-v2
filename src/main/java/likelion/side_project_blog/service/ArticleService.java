@@ -10,6 +10,7 @@ import likelion.side_project_blog.dto.response.ArticleResponse;
 import likelion.side_project_blog.dto.response.CommentResponse;
 import likelion.side_project_blog.repository.ArticleRepository;
 import likelion.side_project_blog.repository.CommentRepository;
+import likelion.side_project_blog.repository.LikeRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,10 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
 
     //글 추가
     public void addArticle(AddArticleRequest request, User user){
-        //제목/내용 null예외처리..
         articleRepository.save(request.toEntity(user));
     }
 
@@ -45,12 +46,14 @@ public class ArticleService {
     }
 
 
+
     //단일 글 조회
-    public ArticleResponse getArticle(Long id){
+    public ArticleResponse getArticle(Long id, User user){
         Article article=articleRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("해당 ID의 게시글을 찾을 수 없습니다."));
+        boolean isLiked=checkLikes(user,article);
         List<CommentResponse> comments=getCommentList(article);
-        return new ArticleResponse(article,comments);
+        return new ArticleResponse(article,comments,isLiked);
     }
 
 
@@ -83,6 +86,11 @@ public class ArticleService {
         return commentRepository.findByArticle(article).stream()
                 .map(comment->new CommentResponse(comment))
                 .toList();
+    }
+
+    //좋아요 눌렀는지
+    private boolean checkLikes(User user,Article article){
+        return likeRepository.existsByUserAndArticle(user,article);
     }
 
 

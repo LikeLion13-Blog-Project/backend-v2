@@ -29,11 +29,15 @@ public class LikeService {
             //좋아요 생성
             Likes newLike=new Likes(user,article);
             likeRepository.save(newLike);
+            article.calTotalLikes(1);
+            articleRepository.save(article);
             return "좋아요 생성 성공";
 
         }else{
             //좋아요 삭제
             likeRepository.delete(like.get());
+            article.calTotalLikes(-1);
+            articleRepository.save(article);
             return "좋아요 삭제 성공";
         }
     }

@@ -32,6 +32,7 @@ public class CommentService {
                     .user(user)
                     .build()
             );
+
         }
     }
 
@@ -45,6 +46,7 @@ public class CommentService {
             throw new IllegalArgumentException("해당 댓글에 대한 삭제 권한이 없습니다.");
         }
         commentRepository.deleteById(commentId);
+
 
     }
 

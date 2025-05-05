@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/blog/like")
+@RequestMapping("/likes")
 @RequiredArgsConstructor
 public class LikeController {
     private final LikeService likeService;

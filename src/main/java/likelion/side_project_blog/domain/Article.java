@@ -29,7 +29,8 @@ public class Article {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private int likenum;
+    private int totalLike;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id",nullable = false)
@@ -46,10 +47,12 @@ public class Article {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.likenum = 0;
+        this.totalLike = 0;
     }
 
-
+    public void calTotalLikes(int change){
+        totalLike+=change;
+    }
 
 
 }
