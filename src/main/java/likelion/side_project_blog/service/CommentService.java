@@ -7,6 +7,7 @@ import likelion.side_project_blog.domain.User;
 import likelion.side_project_blog.dto.request.AddCommentRequest;
 import likelion.side_project_blog.exception.ArticleNotFoundException;
 import likelion.side_project_blog.exception.CommentNotFoundException;
+import likelion.side_project_blog.exception.PermissionDeniedException;
 import likelion.side_project_blog.repository.ArticleRepository;
 import likelion.side_project_blog.repository.CommentRepository;
 import lombok.AllArgsConstructor;
@@ -45,7 +46,7 @@ public class CommentService {
                 .orElseThrow(()->new CommentNotFoundException("해당 ID의 댓글을 찾을 수 없습니다."));
 
         if(!comment.getUser().getUserId().equals(user.getUserId())){
-            throw new IllegalArgumentException("해당 댓글에 대한 삭제 권한이 없습니다.");
+            throw new PermissionDeniedException("해당 댓글에 대한 삭제 권한이 없습니다.");
         }
         commentRepository.deleteById(commentId);
 

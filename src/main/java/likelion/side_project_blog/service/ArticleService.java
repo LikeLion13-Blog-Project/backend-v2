@@ -9,6 +9,7 @@ import likelion.side_project_blog.dto.response.ApiResponse;
 import likelion.side_project_blog.dto.response.ArticleResponse;
 import likelion.side_project_blog.dto.response.CommentResponse;
 import likelion.side_project_blog.exception.ArticleNotFoundException;
+import likelion.side_project_blog.exception.PermissionDeniedException;
 import likelion.side_project_blog.repository.ArticleRepository;
 import likelion.side_project_blog.repository.CommentRepository;
 import likelion.side_project_blog.repository.LikeRepository;
@@ -63,7 +64,7 @@ public class ArticleService {
         Article article=articleRepository.findById(id)
                         .orElseThrow(()->new ArticleNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
         if(!article.getUser().getUserId().equals(user.getUserId())){
-            throw new IllegalArgumentException("해당 글에 대한 삭제 권한이 없습니다");
+            throw new PermissionDeniedException("해당 글에 대한 삭제 권한이 없습니다");
         }
         articleRepository.deleteById(id);
 
@@ -74,7 +75,7 @@ public class ArticleService {
         Article article=articleRepository.findById(id)
                         .orElseThrow(()->new ArticleNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
         if(!article.getUser().getUserId().equals(user.getUserId())){
-            throw new IllegalArgumentException("해당 글에 대한 수정 권한이 없습니다");
+            throw new PermissionDeniedException("해당 글에 대한 수정 권한이 없습니다");
         }
         article.update(request.getTitle(),request.getContent());
         articleRepository.save(article);
