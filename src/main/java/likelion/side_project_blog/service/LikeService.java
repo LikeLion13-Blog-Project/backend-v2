@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import likelion.side_project_blog.domain.Article;
 import likelion.side_project_blog.domain.Likes;
 import likelion.side_project_blog.domain.User;
+import likelion.side_project_blog.exception.ArticleNotFoundException;
 import likelion.side_project_blog.repository.ArticleRepository;
 import likelion.side_project_blog.repository.LikeRepository;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class LikeService {
 
     public String clickLikes(User user, long id) {
         Article article=articleRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("해당 ID의 글을 찾을 수 없습니다."));
+                .orElseThrow(()->new ArticleNotFoundException("해당 ID의 글을 찾을 수 없습니다."));
         Optional<Likes> like=likeRepository.findByUserAndArticle(user,article);
 
         if(like.isEmpty()){
