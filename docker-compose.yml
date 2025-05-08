@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: naaadang/blog-app-v2
+    container_name: app2
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - blog-net
+    ports:
+      - "8080:8080"
+
+
+volumes:
+  blog_pgdata:
+
+networks:
+  blog-net:
+    external: true
+    name: blog-net
