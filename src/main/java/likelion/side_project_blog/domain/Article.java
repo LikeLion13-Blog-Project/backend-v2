@@ -31,6 +31,9 @@ public class Article {
     @Column(nullable = false)
     private int totalLike;
 
+    @Column(nullable=false)
+    private int totalComments;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id",nullable = false)
@@ -44,15 +47,11 @@ public class Article {
         this.content=content;
     }
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.totalLike = 0;
-    }
 
     public void calTotalLikes(int change){
         totalLike+=change;
     }
+    public void calTotalComments(int change){totalComments+=change;}
 
 
 }

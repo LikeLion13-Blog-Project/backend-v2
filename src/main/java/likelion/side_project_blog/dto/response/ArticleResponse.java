@@ -1,15 +1,14 @@
 package likelion.side_project_blog.dto.response;
 
 import likelion.side_project_blog.domain.Article;
-import likelion.side_project_blog.domain.User;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class ArticleResponse {
     private final Long id;
     private final String title;
@@ -17,37 +16,36 @@ public class ArticleResponse {
     private final String author;
     private final LocalDateTime createdAt;
     private int totalLike;
+    private int totalComments;
     //댓글목록
     private final List<CommentResponse> comments;
-    private int totalComments;
     private Boolean isLiked;
 
-    public ArticleResponse(Article article, List<CommentResponse> comments,boolean isLiked){
-        this.id=article.getId();
-        this.title= article.getTitle();;
-        this.content= article.getContent();
-        this.createdAt=article.getCreatedAt();
-        this.comments=comments;
-        this.author=article.getUser().getUserId();
-        this.totalLike= article.getTotalLike();
-        this.totalComments=comments.size();
-        this.isLiked=isLiked;
+
+
+    public static ArticleResponse of(Article article, List<CommentResponse> commentList, boolean isLiked) {
+        return ArticleResponse.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .author(article.getUser().getUserId())
+                .createdAt(article.getCreatedAt())
+                .totalLike(article.getTotalLike())
+                .totalComments(article.getTotalComments())
+                .comments(commentList)
+                .isLiked(isLiked)
+                .build();
     }
 
-    public ArticleResponse(Article article, List<CommentResponse> comments){
-        this.id=article.getId();
-        this.title= article.getTitle();
-        this.content=article.getContent();
-        this.createdAt=article.getCreatedAt();
-        this.author=article.getUser().getUserId();
-        this.comments=comments;
-        this.totalLike=article.getTotalLike();
-        this.totalComments=comments.size();
-        this.isLiked=null;
+    public static ArticleResponse of(Article article) {
+        return ArticleResponse.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .author(article.getUser().getUserId())
+                .createdAt(article.getCreatedAt())
+                .totalLike(article.getTotalLike())
+                .totalComments(article.getTotalComments())
+                .build();
     }
-
-
-
-
-
 }

@@ -25,18 +25,12 @@ public class CommentService {
 
     /*댓글 작성*/
     public void addComment(long articleId, AddCommentRequest request, User user) {
-        Optional<Article> article=articleRepository.findById(articleId);
-        if(article.isEmpty()){
-            throw new ArticleNotFoundException("해당 ID의 게시글을 찾을 수 없습니다");
-        }else{
-            commentRepository.save(Comment.builder()
-                    .article(article.get())
-                    .content(request.getContent())
-                    .user(user)
-                    .build()
-            );
+        Article article=articleRepository.findById(articleId)
+                .orElseThrow(()->new ArticleNotFoundException("해당 ID의 게시글을 찾을 수 없습니다"));
 
-        }
+        commentRepository.save(request.toEntity(request,article,user));
+        article.calTotalComments(1);
+        articleRepository.save(article);
     }
 
 
@@ -49,7 +43,8 @@ public class CommentService {
             throw new PermissionDeniedException("해당 댓글에 대한 삭제 권한이 없습니다.");
         }
         commentRepository.deleteById(commentId);
-
+        comment.getArticle().calTotalComments(-1);
+        articleRepository.save(comment.getArticle());
 
     }
 

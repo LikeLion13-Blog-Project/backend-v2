@@ -42,11 +42,9 @@ public class ArticleService {
     public List<ArticleResponse> getAllArticles(){
         List<Article> articles = articleRepository.findAll();
         return articles.stream()
-                .map(article -> new ArticleResponse(article,getCommentList(article)))
+                .map(article->ArticleResponse.of(article))
                 .toList();
-
     }
-
 
 
     //단일 글 조회
@@ -55,7 +53,7 @@ public class ArticleService {
                 .orElseThrow(()-> new ArticleNotFoundException("해당 ID의 게시글을 찾을 수 없습니다."));
         boolean isLiked=checkLikes(user,article);
         List<CommentResponse> comments=getCommentList(article);
-        return new ArticleResponse(article,comments,isLiked);
+        return ArticleResponse.of(article,comments,isLiked);
     }
 
 
