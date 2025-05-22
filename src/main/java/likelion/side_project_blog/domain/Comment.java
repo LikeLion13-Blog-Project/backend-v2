@@ -36,16 +36,5 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Builder
-    public Comment(Article article,String content, User user){
-        this.article=article;
-        this.content=content;
-        this.user=user;
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 
 }

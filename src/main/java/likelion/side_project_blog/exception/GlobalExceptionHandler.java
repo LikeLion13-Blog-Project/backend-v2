@@ -25,6 +25,11 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.FORBIDDEN,ex.getMessage());
     }
 
+    @ExceptionHandler(PasswordMismatchException.class) // 추가
+    public ResponseEntity<ApiResponse> handlePasswordMismatchException(PasswordMismatchException ex){
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage()); // 401 Unauthorized
+    }
+
     public ResponseEntity<ApiResponse> buildErrorResponse(HttpStatus status,String message){
         ApiResponse apiResponse=new ApiResponse(false, status.value(), message);
         return new ResponseEntity<>(apiResponse,status);

@@ -1,7 +1,8 @@
-package likelion.side_project_blog.security;
+package likelion.side_project_blog.service;
 
 import likelion.side_project_blog.domain.User;
 import likelion.side_project_blog.repository.UserRepository;
+import likelion.side_project_blog.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
