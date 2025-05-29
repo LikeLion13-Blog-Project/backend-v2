@@ -31,7 +31,7 @@ public class Article {
     @Column(nullable = false)
     private int totalLike;
 
-    @Column(nullable=false)
+    @Column(name = "total_comments",nullable=false)
     private int totalComments;
 
 
