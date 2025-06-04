@@ -43,6 +43,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:5173"); // 허용 origin
+        configuration.addAllowedOrigin("https://deploy-test-lac-three.vercel.app"); // 허용 origin
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용 메서드
         configuration.addAllowedHeader("*");     // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 쿠키/Authorization 허용
