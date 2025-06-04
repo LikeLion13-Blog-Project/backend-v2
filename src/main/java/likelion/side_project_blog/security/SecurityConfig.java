@@ -43,8 +43,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+
         configuration.setAllowedOriginPatterns(Arrays.asList(
-                "https://deploy-test-lac-three.vercel.app", // 정확한 origin도 추가 가능
+                "https://deploy-test-lac-three.vercel.app",
                 "http://localhost:5173"
         ));
 
