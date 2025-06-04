@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/articles").permitAll()
                         .requestMatchers("/articles/*").authenticated()
@@ -42,7 +43,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:5173"); // 허용 origin
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+                "https://deploy-test-lac-three.vercel.app", // 정확한 origin도 추가 가능
+                "http://localhost:5173"
+        ));
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용 메서드
         configuration.addAllowedHeader("*");     // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 쿠키/Authorization 허용
