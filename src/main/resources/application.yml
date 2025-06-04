@@ -26,3 +26,7 @@ jwt:
   secret: ${SECRET_KEY}
   expiration: 3600000
 
+
+server:
+  forward-headers-strategy: FRAMEWORK
+
