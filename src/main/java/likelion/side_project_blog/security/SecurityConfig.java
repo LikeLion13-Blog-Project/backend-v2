@@ -52,7 +52,7 @@ public class SecurityConfig {
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
        // configuration.addAllowedHeader("*");         // 모든 헤더 허용
-        corsConfiguration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);     // 쿠키/Authorization 허용 (중요!)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
