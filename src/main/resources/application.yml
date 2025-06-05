@@ -31,10 +31,12 @@ server:
 
 logging:
   level:
+    # Spring Security 관련 로그를 상세하게 확인합니다.
     org.springframework.security: DEBUG
-    org.springframework.web: DEBUG 
-
-
-server:
-  forward-headers-strategy: FRAMEWORK
+    # 웹 관련 요청 처리 및 필터 로그를 상세하게 확인합니다.
+    org.springframework.web: DEBUG
+    # 당신의 애플리케이션 최상위 패키지명을 여기에 입력하세요.
+    # 예시: likelion.side_project_blog
+    # 이 부분을 정확히 입력해야 당신의 애플리케이션 로직 내부의 DEBUG 로그도 확인할 수 있습니다.
+    likelion.side_project_blog: DEBUG
 
