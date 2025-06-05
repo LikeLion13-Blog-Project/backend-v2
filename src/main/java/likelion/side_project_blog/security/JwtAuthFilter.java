@@ -44,6 +44,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         //헤더 토큰
         String token=jwtTokenService.resolveToken(request);
+        if (token == null) {
+            System.out.println("[JwtAuthFilter] 토큰 없음, 인증 없이 요청 처리");
+        } else if (!jwtTokenService.validateToken(token)) {
+            System.out.println("[JwtAuthFilter] 토큰 유효하지 않음");
+        }
 
         if(token!=null&&jwtTokenService.validateToken(token)){
             String userId= jwtTokenService.getUserId(token);

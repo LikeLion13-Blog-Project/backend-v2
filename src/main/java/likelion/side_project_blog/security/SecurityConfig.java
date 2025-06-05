@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -43,12 +44,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("https://new-blog-pied.vercel.app")); // 딱 하나만
 
-        configuration.setAllowedOrigins(Arrays.asList(
-                "https://deploy-test-lac-three.vercel.app",
-                "http://localhost:5173",
-                "https://new-blog-pied.vercel.app"
-        ));
+
+//        configuration.setAllowedOrigins(Arrays.asList(
+//                "https://deploy-test-lac-three.vercel.app",
+//                "http://localhost:5173",
+//                "https://new-blog-pied.vercel.app"
+//        ));
 
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용 메서드
