@@ -44,7 +44,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("https://*.vercel.app", "http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "https://new-blog-pied.vercel.app" 
+        ));
 //        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // 딱 하나만
 //        configuration.setAllowedOrigins(List.of("https://new-blog-pied.vercel.app")); // 딱 하나만
 
