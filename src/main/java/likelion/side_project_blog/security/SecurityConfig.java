@@ -46,7 +46,8 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://deploy-test-lac-three.vercel.app",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "https://new-blog-pied.vercel.app"
         ));
 
 
