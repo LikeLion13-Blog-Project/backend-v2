@@ -47,25 +47,14 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
             "http://localhost:5173",
-            "https://new-blog-pied.vercel.app" 
+            "https://new-blog-pied.vercel.app" // 여기가 정확한지 다시 확인
         ));
-//        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // 딱 하나만
-//        configuration.setAllowedOrigins(List.of("https://new-blog-pied.vercel.app")); // 딱 하나만
-
-
-//        configuration.setAllowedOrigins(Arrays.asList(
-//                "https://deploy-test-lac-three.vercel.app",
-//                "http://localhost:5173",
-//                "https://new-blog-pied.vercel.app"
-//        ));
-
-
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용 메서드
-        configuration.addAllowedHeader("*");     // 모든 헤더 허용
-        configuration.setAllowCredentials(true); // 쿠키/Authorization 허용
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.addAllowedHeader("*");         // 모든 헤더 허용
+        configuration.setAllowCredentials(true);     // 쿠키/Authorization 허용 (중요!)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 CORS 적용
         return source;
     }
 
