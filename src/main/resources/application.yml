@@ -26,6 +26,14 @@ jwt:
   secret: ${SECRET_KEY}
   expiration: 3600000
 
+server:
+  forward-headers-strategy: FRAMEWORK
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG 
+
 
 server:
   forward-headers-strategy: FRAMEWORK
