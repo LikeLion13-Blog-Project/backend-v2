@@ -47,7 +47,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
             "http://localhost:5173",
-            "https://new-blog-pied.vercel.app" // 여기가 정확한지 다시 확인
+            "https://new-blog-pied.vercel.app", // 여기가 정확한지 다시 확인
+            "https://likelion13-blog.duckdns.org"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.addAllowedHeader("*");         // 모든 헤더 허용
